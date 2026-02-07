@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For My Darling ❤️</title>
+
+<style>
+body{
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom, #ffd6e8, #fff0f6);
+    text-align:center;
+    overflow-x:hidden;
+}
+
+.container{
+    padding:40px;
+}
+
+h1{
+    color:#ff4d88;
+}
+
+button{
+    padding:12px 25px;
+    border:none;
+    border-radius:12px;
+    font-size:18px;
+    cursor:pointer;
+    margin:10px;
+}
+
+.yes{
+    background:#ff4d88;
+    color:white;
+}
+
+.no{
+    background:white;
+}
+
+.hidden{
+    display:none;
+}
+
+.slideshow{
+    max-width:300px;
+    margin:20px auto;
+}
+
+.slideshow img{
+    width:100%;
+    border-radius:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.2);
+}
+
+.letter{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    max-width:500px;
+    margin:30px auto;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+}
+
+.fade{
+    animation: fade 1s;
+}
+
+@keyframes fade{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background Music -->
+<audio autoplay loop>
+<source src="https://open.spotify.com/track/5XeFesFbtLpXzIVDNQP22n?si=YYZj9NvGRk-WvFKu8fJZlg" type="audio/mpeg">
+</audio>
+
+<div class="container">
+
+<h1>For My Darling 💕</h1>
+<p>I made something special for you...</p>
+
+<button onclick="startMemories()">Tap Here 💌</button>
+
+</div>
+
+<!-- Memory Slideshow -->
+<div id="memories" class="hidden fade">
+
+<h1>Our Memories 📸</h1>
+
+<div class="slideshow">
+<img id="slide">
+</div>
+
+<button onclick="showLetter()">Next ❤️</button>
+
+</div>
+
+<!-- Love Letter -->
+<div id="letter" class="hidden fade">
+
+<h1>To My Darling 💗</h1>
+
+<div class="letter">
+<p>
+My dearest Darling,
+
+From the moment you came into my life, everything started feeling softer, warmer, and brighter.  
+You make my normal days feel special and my worst days feel easier.
+
+I love the way you exist, the way you smile, the way you make my heart feel calm and excited at the same time.
+
+You are not just someone I love…  
+You are someone I cherish, admire, and feel grateful for every single day.
+
+No matter where life takes us, one thing will always stay the same —  
+My heart choosing you again and again.
+
+Happy Valentine's Day ❤️
+</p>
+</div>
+
+<button onclick="valentineQuestion()">Continue 💕</button>
+
+</div>
+
+<!-- Valentine Question -->
+<div id="question" class="hidden fade">
+
+<h1>Will You Be My Valentine? 🌹</h1>
+
+<button class="yes" onclick="yesAnswer()">Yes 😍</button>
+<button class="no" id="noBtn" onmouseover="moveNo()">No 😢</button>
+
+</div>
+
+<!-- Final Message -->
+<div id="final" class="hidden fade">
+
+<h1>I Love You So Much Darling ❤️</h1>
+<p>You make my world beautiful.</p>
+
+</div>
+
+<script>
+
+let photos = [
+"https://i.postimg.cc/mkyHKPTG/IMG-20260207-162506-001.jpg",
+"https://i.postimg.cc/qqx3WNpC/IMG-20260207-162457-990.jpg",
+"https://i.postimg.cc/vTtVC4Gn/IMG-20260207-162502-599.jpg"
+];
+
+let i = 0;
+
+function startMemories(){
+    document.querySelector(".container").style.display="none";
+    document.getElementById("memories").style.display="block";
+    showSlides();
+}
+
+function showSlides(){
+    document.getElementById("slide").src = photos[i];
+    i++;
+    if(i < photos.length){
+        setTimeout(showSlides, 2500);
+    }
+}
+
+function showLetter(){
+    document.getElementById("memories").style.display="none";
+    document.getElementById("letter").style.display="block";
+}
+
+function valentineQuestion(){
+    document.getElementById("letter").style.display="none";
+    document.getElementById("question").style.display="block";
+}
+
+function yesAnswer(){
+    document.getElementById("question").style.display="none";
+    document.getElementById("final").style.display="block";
+}
+
+function moveNo(){
+    let btn = document.getElementById("noBtn");
+    btn.style.position="absolute";
+    btn.style.left=Math.random()*80+"%";
+    btn.style.top=Math.random()*80+"%";
+}
+
+</script>
+
+</body>
+</html>
