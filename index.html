@@ -1,59 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>For My Darling Mylana ❤️</title>
 
 <style>
 body{
-    margin:0;
-    font-family: Arial, sans-serif;
-    background:#ffd6e0;
-    text-align:center;
-    color:white;
+margin:0;
+font-family:sans-serif;
+background:#ffd6e0;
+text-align:center;
+color:white;
+overflow-x:hidden;
 }
 
-h1{
-    margin-top:40px;
+.section{
+padding:50px 20px;
+display:none;
 }
 
 button{
-    padding:15px 25px;
-    border:none;
-    border-radius:30px;
-    font-size:18px;
-    margin:10px;
-    cursor:pointer;
-    background:white;
-    color:#ff4d6d;
+padding:15px 30px;
+border:none;
+border-radius:30px;
+font-size:18px;
+margin:10px;
+background:white;
+color:#ff4d6d;
+cursor:pointer;
 }
 
-.gallery img{
-    width:80%;
-    max-width:300px;
-    border-radius:20px;
-    margin:10px;
+.carousel img{
+width:80%;
+max-width:300px;
+border-radius:20px;
 }
 
-.hidden{
-    display:none;
+#intro{
+display:block;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
 }
 
-#loveLetter{
-    padding:20px;
-    background:white;
-    color:#ff4d6d;
-    border-radius:20px;
-    width:80%;
-    margin:auto;
-}
-
-.hearts{
-    position:fixed;
-    top:0;
-    left:0;
-    pointer-events:none;
+#letterBox{
+background:white;
+color:#ff4d6d;
+padding:20px;
+border-radius:20px;
+width:80%;
+margin:auto;
+min-height:150px;
 }
 
 </style>
@@ -61,79 +59,128 @@ button{
 
 <body>
 
-<h1>For My Darling Mylana ❤️</h1>
-
-<button onclick="startSurprise()">Open Your Surprise</button>
-
-<br><br>
-
-<audio id="song">
-<source src="https://github.com/ArmaanxXx/valentine/blob/main/I_Wanna_Be_Yours.mp3" type="audio/mpeg">
+<audio id="song" controls>
+  <source src="I_Wanna_Be_Yours.mp3" type="audio/mpeg">
 </audio>
 
-<div id="mainContent" class="hidden">
+<!-- INTRO -->
+<div id="intro">
+<h1>For My Darling Mylana ❤️</h1>
+<button onclick="start()">Tap To Begin</button>
+</div>
 
+<!-- MEMORIES -->
+<div id="memories" class="section">
 <h2>Our Memories 📸</h2>
-
-<div class="gallery">
-<img src="https://i.postimg.cc/mkyHKPTG/IMG-20260207-162506-001.jpg">
-<img src="https://i.postimg.cc/qqx3WNpC/IMG-20260207-162457-990.jpg">
-<img src="photo3.jpg">
-<img src="photo4.jpg">
-<img src="photo5.jpg">
-<img src="photo6.jpg">
+<div class="carousel">
+<img id="slide" src="photo1.jpg">
+</div>
+<br>
+<button onclick="nextPhoto()">Next Memory ➡️</button>
+<button onclick="goLetter()">Continue ❤️</button>
 </div>
 
+<!-- LETTER -->
+<div id="letter" class="section">
+<h2>A Letter For You 💌</h2>
+<div id="letterBox"></div>
 <br>
-
-<button onclick="showLetter()">Read My Love Letter 💌</button>
-
-<div id="loveLetter" class="hidden">
-<p>
-My darling Mylana,
-
-From the moment you came into my life, everything started feeling softer, warmer, and brighter.  
-You make my world calmer and happier in ways I never imagined.
-
-Every memory with you feels special. Every conversation feels like home.  
-You are not just someone I love… you are someone I deeply cherish.
-
-No matter where life takes us, I promise to always value you, respect you, and protect your heart.
-
-I love you ❤️  
-</p>
+<button onclick="goProposal()">One More Thing...</button>
 </div>
 
-<br>
-
-<h2>One Important Question…</h2>
-
-<button onclick="yesAnswer()">YES ❤️</button>
-<button onclick="moveNo(this)">NO 😜</button>
-
+<!-- PROPOSAL -->
+<div id="proposal" class="section">
+<h2>Will You Be My Valentine? ❤️</h2>
+<button onclick="yes()">YES ❤️</button>
+<button onclick="runNo(this)">NO 😜</button>
 <h2 id="result"></h2>
-
 </div>
 
 <script>
 
-function startSurprise(){
-    document.getElementById("mainContent").classList.remove("hidden");
-    document.getElementById("song").play();
+let photos=[
+"https://i.postimg.cc/mkyHKPTG/IMG-20260207-162506-001.jpg",
+"https://i.postimg.cc/qqx3WNpC/IMG-20260207-162457-990.jpg",
+"https://i.postimg.cc/vTtVC4Gn/IMG-20260207-162502-599.jpg",
+"photo4.jpg",
+"photo5.jpg",
+"photo6.jpg"
+];
+
+let index=0;
+
+function start(){
+document.getElementById("intro").style.display="none";
+document.getElementById("memories").style.display="block";
+document.getElementById("music").play();
 }
 
-function showLetter(){
-    document.getElementById("loveLetter").classList.remove("hidden");
+function nextPhoto(){
+index=(index+1)%photos.length;
+document.getElementById("slide").src=photos[index];
 }
 
-function yesAnswer(){
-    document.getElementById("result").innerText="You just made me the happiest person alive ❤️";
+function goLetter(){
+document.getElementById("memories").style.display="none";
+document.getElementById("letter").style.display="block";
+typeLetter();
 }
 
-function moveNo(btn){
-    btn.style.position="absolute";
-    btn.style.top=Math.random()*80+"%";
-    btn.style.left=Math.random()*80+"%";
+let text=`My darling Mylana,
+
+From the moment you came into my life, everything started feeling softer, warmer, and brighter.
+
+You make my world calmer and happier in ways I never imagined. Every memory with you feels special. Every conversation feels like home.
+
+You are not just someone I love… you are someone I deeply cherish.
+
+I love you ❤️`;
+
+let i=0;
+
+function typeLetter(){
+let speed=40;
+if(i<text.length){
+document.getElementById("letterBox").innerHTML+=text.charAt(i);
+i++;
+setTimeout(typeLetter,speed);
+}
+}
+
+function goProposal(){
+document.getElementById("letter").style.display="none";
+document.getElementById("proposal").style.display="block";
+}
+
+function yes(){
+document.getElementById("result").innerHTML="YOU JUST MADE ME THE HAPPIEST PERSON ALIVE ❤️🎉";
+confetti();
+}
+
+function runNo(btn){
+btn.style.position="absolute";
+btn.style.top=Math.random()*80+"%";
+btn.style.left=Math.random()*80+"%";
+}
+
+function confetti(){
+for(let i=0;i<100;i++){
+let div=document.createElement("div");
+div.innerHTML="❤️";
+div.style.position="fixed";
+div.style.left=Math.random()*100+"%";
+div.style.top="-10px";
+div.style.fontSize="25px";
+document.body.appendChild(div);
+
+let fall=setInterval(()=>{
+div.style.top=parseInt(div.style.top)+5+"px";
+if(parseInt(div.style.top)>window.innerHeight){
+clearInterval(fall);
+div.remove();
+}
+},30);
+}
 }
 
 </script>
