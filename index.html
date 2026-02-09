@@ -3,191 +3,128 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Darling Mylana ❤️</title>
+<title>For Someone Special ❤️</title>
 
 <style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(270deg,#ff9a9e,#fad0c4,#fad0c4,#ffdde1);
+  background-size: 800% 800%;
+  animation: gradient 15s ease infinite;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+}
 
-body{
-margin:0;
-font-family:'Segoe UI',sans-serif;
-background:linear-gradient(135deg,#ffd6e8,#ffeef5);
-text-align:center;
-overflow-x:hidden;
+@keyframes gradient {
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+.container {
+  margin-top: 25vh;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
+button {
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 30px;
+  background: white;
+  color: #ff4d6d;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+#message {
+  margin-top: 20px;
+  font-size: 22px;
+  display: none;
 }
 
 /* Floating hearts */
-
-.heart{
-position:fixed;
-bottom:-10px;
-font-size:20px;
-animation:float 6s linear infinite;
-opacity:0.7;
+.heart {
+  position: fixed;
+  bottom: -10px;
+  font-size: 20px;
+  animation: float 6s linear infinite;
 }
 
-@keyframes float{
-0%{transform:translateY(0);}
-100%{transform:translateY(-110vh);}
+@keyframes float {
+  0% {transform: translateY(0);}
+  100% {transform: translateY(-100vh);}
 }
-
-/* Container */
-
-.container{
-padding:40px 20px;
-}
-
-h1{
-color:#ff4d88;
-font-size:32px;
-}
-
-.subtitle{
-color:#555;
-margin-bottom:25px;
-}
-
-/* Buttons */
-
-.btn{
-background:#ff85a2;
-border:none;
-padding:12px 22px;
-margin:10px;
-border-radius:25px;
-color:white;
-font-size:16px;
-cursor:pointer;
-transition:0.3s;
-box-shadow:0 4px 10px rgba(0,0,0,0.15);
-}
-
-.btn:hover{
-transform:scale(1.08);
-background:#ff4d88;
-}
-
-/* Gallery */
-
-.gallery img{
-width:220px;
-border-radius:15px;
-margin:10px;
-box-shadow:0 4px 10px rgba(0,0,0,0.2);
-}
-
-/* Popup */
-
-.popup{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-justify-content:center;
-align-items:center;
-}
-
-.popup-content{
-background:white;
-padding:25px;
-border-radius:15px;
-width:80%;
-max-width:350px;
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- Floating hearts script -->
-<script>
-setInterval(()=>{
-let heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML="❤️";
-heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(15+Math.random()*20)+"px";
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),6000);
-},500);
-</script>
-
 <div class="container">
+  <h1 id="typing"></h1>
 
-<h1>For My Darling Mylana ❤️</h1>
-<p class="subtitle">A little surprise made just for you</p>
+  <button onclick="showLove()">Tap Here ❤️</button>
 
-<button class="btn" onclick="showLetter()">Read Love Letter 💌</button>
-<button class="btn" onclick="showGallery()">Our Memories 📸</button>
-<button class="btn" onclick="playMusic()">Play Our Song 🎵</button>
+  <div id="message">
+    You make my world brighter, calmer and happier.  
+    This song reminds me of you 💫
+  </div>
 
-<!-- MUSIC -->
-
-<audio id="song" controls>
-  <source src="I_Wanna_Be_Yours.mp3" type="audio/mpeg">
-</audio>
-<!-- GALLERY -->
-<div id="gallery" class="gallery" style="display:none;">
-<img src="https://i.postimg.cc/mkyHKPTG/IMG-20260207-162506-001.jpg">
-<img src="https://i.postimg.cc/qqx3WNpC/IMG-20260207-162457-990.jpg">
-<img src="https://i.postimg.cc/vTtVC4Gn/IMG-20260207-162502-599.jpg">
+  <br><br>
+  <button onclick="playSong()">🎵 Play Our Song</button>
 </div>
 
-</div>
-
-<!-- LOVE LETTER POPUP -->
-<div id="letterPopup" class="popup">
-<div class="popup-content">
-<h3>My Darling ❤️</h3>
-<p>
-
-From the moment you came into my life, everything started feeling softer, warmer, and brighter.
-
-You make ordinary days feel special just by existing. Your smile, your presence, and the way you care mean more to me than words can ever explain.
-
-This little surprise is just a tiny reminder that you are loved, appreciated, and deeply cherished.
-
-Happy Valentine's Day, my darling 💖
-
-</p>
-
-<button class="btn" onclick="closeLetter()">Close</button>
-</div>
-</div>
+<audio id="song" src="https://github.com/ArmaanxXx/valentine/blob/main/I_Wanna_Be_Yours.mp3"></audio>
 
 <script>
+/* Typewriter Effect */
+const text = "I Made This Just For You...";
+let i = 0;
 
-function playMusic(){
-document.getElementById("song").play();
+function typing(){
+  if(i < text.length){
+    document.getElementById("typing").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typing, 70);
+  }
+}
+typing();
+
+/* Show message + confetti */
+function showLove(){
+  document.getElementById("message").style.display = "block";
+  createHearts();
 }
 
-function showGallery(){
-let g=document.getElementById("gallery");
-g.style.display=g.style.display==="none"?"block":"none";
+/* Play music */
+function playSong(){
+  document.getElementById("song").play();
 }
 
-function showLetter(){
-document.getElementById("letterPopup").style.display="flex";
-}
+/* Floating hearts generator */
+function createHearts(){
+  for(let i=0;i<30;i++){
+    let heart = document.createElement("div");
+    heart.innerHTML = "❤️";
+    heart.classList.add("heart");
+    heart.style.left = Math.random()*100+"vw";
+    heart.style.animationDuration = (Math.random()*3+3)+"s";
+    document.body.appendChild(heart);
 
-function closeLetter(){
-document.getElementById("letterPopup").style.display="none";
+    setTimeout(()=>{heart.remove();},6000);
+  }
 }
-
 </script>
 
 </body>
 </html>
-</script>
-
-</body>
-
-</html>
-
-
-
-
-
