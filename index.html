@@ -3,127 +3,139 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Someone Special ❤️</title>
+<title>For My Darling Mylana ❤️</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(270deg,#ff9a9e,#fad0c4,#fad0c4,#ffdde1);
-  background-size: 800% 800%;
-  animation: gradient 15s ease infinite;
-  color: white;
-  text-align: center;
-  overflow: hidden;
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#ffd6e0;
+    text-align:center;
+    color:white;
 }
 
-@keyframes gradient {
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
+h1{
+    margin-top:40px;
 }
 
-.container {
-  margin-top: 25vh;
-  padding: 20px;
+button{
+    padding:15px 25px;
+    border:none;
+    border-radius:30px;
+    font-size:18px;
+    margin:10px;
+    cursor:pointer;
+    background:white;
+    color:#ff4d6d;
 }
 
-h1 {
-  font-size: 2.5em;
+.gallery img{
+    width:80%;
+    max-width:300px;
+    border-radius:20px;
+    margin:10px;
 }
 
-button {
-  padding: 15px 30px;
-  font-size: 18px;
-  border: none;
-  border-radius: 30px;
-  background: white;
-  color: #ff4d6d;
-  cursor: pointer;
-  transition: 0.3s;
+.hidden{
+    display:none;
 }
 
-button:hover {
-  transform: scale(1.1);
+#loveLetter{
+    padding:20px;
+    background:white;
+    color:#ff4d6d;
+    border-radius:20px;
+    width:80%;
+    margin:auto;
 }
 
-#message {
-  margin-top: 20px;
-  font-size: 22px;
-  display: none;
+.hearts{
+    position:fixed;
+    top:0;
+    left:0;
+    pointer-events:none;
 }
 
-/* Floating hearts */
-.heart {
-  position: fixed;
-  bottom: -10px;
-  font-size: 20px;
-  animation: float 6s linear infinite;
-}
-
-@keyframes float {
-  0% {transform: translateY(0);}
-  100% {transform: translateY(-100vh);}
-}
 </style>
 </head>
 
 <body>
 
-<div class="container">
-  <h1 id="typing"></h1>
+<h1>For My Darling Mylana ❤️</h1>
 
-  <button onclick="showLove()">Tap Here ❤️</button>
+<button onclick="startSurprise()">Open Your Surprise</button>
 
-  <div id="message">
-    You make my world brighter, calmer and happier.  
-    This song reminds me of you 💫
-  </div>
+<br><br>
 
-  <br><br>
-  <button onclick="playSong()">🎵 Play Our Song</button>
+<audio id="song">
+<source src="https://github.com/ArmaanxXx/valentine/blob/main/I_Wanna_Be_Yours.mp3" type="audio/mpeg">
+</audio>
+
+<div id="mainContent" class="hidden">
+
+<h2>Our Memories 📸</h2>
+
+<div class="gallery">
+<img src="https://i.postimg.cc/mkyHKPTG/IMG-20260207-162506-001.jpg">
+<img src="https://i.postimg.cc/qqx3WNpC/IMG-20260207-162457-990.jpg">
+<img src="photo3.jpg">
+<img src="photo4.jpg">
+<img src="photo5.jpg">
+<img src="photo6.jpg">
 </div>
 
-<audio id="song" src="https://github.com/ArmaanxXx/valentine/blob/main/I_Wanna_Be_Yours.mp3"></audio>
+<br>
+
+<button onclick="showLetter()">Read My Love Letter 💌</button>
+
+<div id="loveLetter" class="hidden">
+<p>
+My darling Mylana,
+
+From the moment you came into my life, everything started feeling softer, warmer, and brighter.  
+You make my world calmer and happier in ways I never imagined.
+
+Every memory with you feels special. Every conversation feels like home.  
+You are not just someone I love… you are someone I deeply cherish.
+
+No matter where life takes us, I promise to always value you, respect you, and protect your heart.
+
+I love you ❤️  
+</p>
+</div>
+
+<br>
+
+<h2>One Important Question…</h2>
+
+<button onclick="yesAnswer()">YES ❤️</button>
+<button onclick="moveNo(this)">NO 😜</button>
+
+<h2 id="result"></h2>
+
+</div>
 
 <script>
-/* Typewriter Effect */
-const text = "I Made This Just For You...";
-let i = 0;
 
-function typing(){
-  if(i < text.length){
-    document.getElementById("typing").innerHTML += text.charAt(i);
-    i++;
-    setTimeout(typing, 70);
-  }
-}
-typing();
-
-/* Show message + confetti */
-function showLove(){
-  document.getElementById("message").style.display = "block";
-  createHearts();
+function startSurprise(){
+    document.getElementById("mainContent").classList.remove("hidden");
+    document.getElementById("song").play();
 }
 
-/* Play music */
-function playSong(){
-  document.getElementById("song").play();
+function showLetter(){
+    document.getElementById("loveLetter").classList.remove("hidden");
 }
 
-/* Floating hearts generator */
-function createHearts(){
-  for(let i=0;i<30;i++){
-    let heart = document.createElement("div");
-    heart.innerHTML = "❤️";
-    heart.classList.add("heart");
-    heart.style.left = Math.random()*100+"vw";
-    heart.style.animationDuration = (Math.random()*3+3)+"s";
-    document.body.appendChild(heart);
-
-    setTimeout(()=>{heart.remove();},6000);
-  }
+function yesAnswer(){
+    document.getElementById("result").innerText="You just made me the happiest person alive ❤️";
 }
+
+function moveNo(btn){
+    btn.style.position="absolute";
+    btn.style.top=Math.random()*80+"%";
+    btn.style.left=Math.random()*80+"%";
+}
+
 </script>
 
 </body>
