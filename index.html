@@ -5,22 +5,36 @@
 <title>For My Darling Mylana ❤️</title>
 
 <style>
+
 body{
 margin:0;
-font-family:sans-serif;
-background:#ffd6e0;
-text-align:center;
-color:white;
+font-family: 'Segoe UI', sans-serif;
+background: linear-gradient(#ff9eb5,#ffd6e0);
 overflow-x:hidden;
+color:white;
+text-align:center;
 }
 
+/* Glass UI */
+.glass{
+background: rgba(255,255,255,0.2);
+backdrop-filter: blur(10px);
+border-radius:20px;
+padding:20px;
+width:85%;
+margin:auto;
+}
+
+/* Sections */
 .section{
-padding:50px 20px;
 display:none;
+padding:40px 20px;
+min-height:100vh;
 }
 
+/* Buttons */
 button{
-padding:15px 30px;
+padding:14px 28px;
 border:none;
 border-radius:30px;
 font-size:18px;
@@ -28,30 +42,40 @@ margin:10px;
 background:white;
 color:#ff4d6d;
 cursor:pointer;
+box-shadow:0 0 15px rgba(255,255,255,0.6);
 }
 
-.carousel img{
-width:80%;
-max-width:300px;
+/* Slideshow */
+.slide{
+width:85%;
+max-width:320px;
 border-radius:20px;
+transition:opacity 1s;
+}
+
+/* Floating Hearts */
+.heart{
+position:fixed;
+font-size:20px;
+animation:float 8s linear infinite;
+opacity:0.7;
+}
+
+@keyframes float{
+from{transform:translateY(100vh);}
+to{transform:translateY(-10vh);}
 }
 
 #intro{
-display:block;
-height:100vh;
 display:flex;
-flex-direction:column;
 justify-content:center;
+align-items:center;
+flex-direction:column;
+height:100vh;
 }
 
 #letterBox{
-background:white;
-color:#ff4d6d;
-padding:20px;
-border-radius:20px;
-width:80%;
-margin:auto;
-min-height:150px;
+min-height:160px;
 }
 
 </style>
@@ -66,120 +90,167 @@ min-height:150px;
 <!-- INTRO -->
 <div id="intro">
 <h1>For My Darling Mylana ❤️</h1>
-<button onclick="start()">Tap To Begin</button>
+<button onclick="start()">Enter Our Story</button>
 </div>
 
 <!-- MEMORIES -->
 <div id="memories" class="section">
 <h2>Our Memories 📸</h2>
-<div class="carousel">
-<img id="slide" src="photo1.jpg">
+
+<div class="glass">
+<img id="slide" class="slide" src="photo1.jpg">
 </div>
+
 <br>
-<button onclick="nextPhoto()">Next Memory ➡️</button>
-<button onclick="goLetter()">Continue ❤️</button>
+<button onclick="nextScene('letter')">Continue ❤️</button>
 </div>
 
 <!-- LETTER -->
 <div id="letter" class="section">
 <h2>A Letter For You 💌</h2>
-<div id="letterBox"></div>
+
+<div class="glass" id="letterBox"></div>
+
 <br>
-<button onclick="goProposal()">One More Thing...</button>
+<button onclick="nextScene('proposal')">One Last Thing...</button>
 </div>
 
 <!-- PROPOSAL -->
 <div id="proposal" class="section">
 <h2>Will You Be My Valentine? ❤️</h2>
+
 <button onclick="yes()">YES ❤️</button>
-<button onclick="runNo(this)">NO 😜</button>
+<button onclick="escapeNo(this)">NO 😜</button>
+
 <h2 id="result"></h2>
 </div>
 
+<button onclick="toggleMusic()" style="position:fixed;bottom:20px;right:20px;">🎵</button>
+
 <script>
 
+/* Floating Hearts Generator */
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"%";
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),8000);
+},800);
+
+/* Music Fade */
+function start(){
+document.getElementById("intro").style.display="none";
+showSection("memories");
+
+let music=document.getElementById("music");
+music.volume=0;
+music.play();
+
+let fade=setInterval(()=>{
+if(music.volume<1){
+music.volume+=0.05;
+}else clearInterval(fade);
+},200);
+}
+
+function toggleMusic(){
+let music=document.getElementById("music");
+music.paused?music.play():music.pause();
+}
+
+/* Scene Switching */
+function showSection(id){
+document.querySelectorAll(".section").forEach(s=>s.style.display="none");
+document.getElementById(id).style.display="block";
+}
+
+function nextScene(id){
+showSection(id);
+if(id=="letter") typeLetter();
+}
+
+/* Slideshow Auto Fade */
 let photos=[
 "https://i.postimg.cc/mkyHKPTG/IMG-20260207-162506-001.jpg",
 "https://i.postimg.cc/qqx3WNpC/IMG-20260207-162457-990.jpg",
 "https://i.postimg.cc/vTtVC4Gn/IMG-20260207-162502-599.jpg",
 "photo4.jpg",
 "photo5.jpg",
-"photo6.jpg"
+"photo6.jpg",
+"photo7.jpg"
 ];
 
-let index=0;
+let slideIndex=0;
 
-function start(){
-document.getElementById("intro").style.display="none";
-document.getElementById("memories").style.display="block";
-document.getElementById("music").play();
+setInterval(()=>{
+slideIndex=(slideIndex+1)%photos.length;
+let img=document.getElementById("slide");
+if(img){
+img.style.opacity=0;
+setTimeout(()=>{
+img.src=photos[slideIndex];
+img.style.opacity=1;
+},500);
 }
+},3000);
 
-function nextPhoto(){
-index=(index+1)%photos.length;
-document.getElementById("slide").src=photos[index];
-}
+/* Typewriter Letter */
+let letter=`My darling Mylana,
 
-function goLetter(){
-document.getElementById("memories").style.display="none";
-document.getElementById("letter").style.display="block";
-typeLetter();
-}
+You walked into my life and quietly turned ordinary days into memories I never want to lose.
 
-let text=`My darling Mylana,
+You calm my chaos, brighten my darkest moods, and make everything feel warmer and safer.
 
-From the moment you came into my life, everything started feeling softer, warmer, and brighter.
+Every laugh, every conversation, every moment with you feels like home.
 
-You make my world calmer and happier in ways I never imagined. Every memory with you feels special. Every conversation feels like home.
-
-You are not just someone I love… you are someone I deeply cherish.
+No matter where life takes us, I promise to value you, respect you, and protect your heart.
 
 I love you ❤️`;
 
 let i=0;
 
 function typeLetter(){
-let speed=40;
-if(i<text.length){
-document.getElementById("letterBox").innerHTML+=text.charAt(i);
+let box=document.getElementById("letterBox");
+if(i<letter.length){
+box.innerHTML+=letter.charAt(i);
 i++;
-setTimeout(typeLetter,speed);
+setTimeout(typeLetter,35);
 }
 }
 
-function goProposal(){
-document.getElementById("letter").style.display="none";
-document.getElementById("proposal").style.display="block";
-}
-
+/* Proposal */
 function yes(){
-document.getElementById("result").innerHTML="YOU JUST MADE ME THE HAPPIEST PERSON ALIVE ❤️🎉";
+document.getElementById("result").innerHTML="You just made me the happiest person alive ❤️🎉";
 confetti();
 }
 
-function runNo(btn){
+function escapeNo(btn){
 btn.style.position="absolute";
-btn.style.top=Math.random()*80+"%";
 btn.style.left=Math.random()*80+"%";
+btn.style.top=Math.random()*80+"%";
 }
 
+/* Confetti */
 function confetti(){
-for(let i=0;i<100;i++){
-let div=document.createElement("div");
-div.innerHTML="❤️";
-div.style.position="fixed";
-div.style.left=Math.random()*100+"%";
-div.style.top="-10px";
-div.style.fontSize="25px";
-document.body.appendChild(div);
+for(let i=0;i<120;i++){
+let c=document.createElement("div");
+c.innerHTML="💖";
+c.style.position="fixed";
+c.style.left=Math.random()*100+"%";
+c.style.top="-10px";
+c.style.fontSize="22px";
+document.body.appendChild(c);
 
 let fall=setInterval(()=>{
-div.style.top=parseInt(div.style.top)+5+"px";
-if(parseInt(div.style.top)>window.innerHeight){
+c.style.top=parseInt(c.style.top)+6+"px";
+if(parseInt(c.style.top)>window.innerHeight){
 clearInterval(fall);
-div.remove();
+c.remove();
 }
-},30);
+},25);
 }
 }
 
