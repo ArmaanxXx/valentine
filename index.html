@@ -109,18 +109,16 @@ box-shadow:0 0 25px rgba(0,0,0,0.4);
 </div>
 
 <br>
-<button onclick="nextScene('letter')">Continue ❤️</button>
+<button onclick="nextScene('proposalFake')">Continue ❤️</button>
 </div>
 
 <!-- LETTER -->
 <div id="letter" class="section">
-<h2>A Letter For You 💌</h2>
+<h2>One last thing i need to say..💌</h2>
 
 <div class="glass" id="letterBox"></div>
 
-<br>
-<button onclick="nextScene('proposalFake')">One Last Thing...</button>
-</div>
+
 
 <!-- FAKE PROPOSAL -->
 <div id="proposalFake" class="section">
@@ -248,20 +246,28 @@ let i=0;
 
 function typeLetter(){
 let box=document.getElementById("letterBox");
+box.innerHTML="";
+i=0;
 
+function typing(){
 if(i<letter.length){
 box.innerHTML+=letter.charAt(i);
 i++;
 
-let randomSpeed = 60 + Math.random()*60;
-setTimeout(typeLetter, randomSpeed);
+let speed = 60 + Math.random()*60;
+setTimeout(typing,speed);
 }
 }
 
-/* YES RESULT */
+typing();
+}
+
 function yes(){
-document.getElementById("result").innerHTML="You just made me the happiest person alive ❤️🎉";
 confetti();
+setTimeout(()=>{
+showSection("letter");
+typeLetter();
+},2000);
 }
 
 /* NO RUN */
@@ -327,6 +333,7 @@ heart.remove();
 
 </body>
 </html>
+
 
 
 
