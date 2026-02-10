@@ -248,10 +248,13 @@ let i=0;
 
 function typeLetter(){
 let box=document.getElementById("letterBox");
+
 if(i<letter.length){
 box.innerHTML+=letter.charAt(i);
 i++;
-setTimeout(typeLetter,35);
+
+let randomSpeed = 60 + Math.random()*60;
+setTimeout(typeLetter, randomSpeed);
 }
 }
 
@@ -324,5 +327,6 @@ heart.remove();
 
 </body>
 </html>
+
 
 
