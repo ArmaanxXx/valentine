@@ -188,7 +188,7 @@ showSection("jokeScene");
 
 setTimeout(()=>{
 showSection("proposalReal");
-},2500);
+},10000);
 
 }
 
@@ -255,28 +255,60 @@ btn.style.left=Math.random()*80+"%";
 btn.style.top=Math.random()*80+"%";
 }
 
-/* Confetti */
 function confetti(){
-for(let i=0;i<120;i++){
-let c=document.createElement("div");
-c.innerHTML="💖";
-c.style.position="fixed";
-c.style.left=Math.random()*100+"%";
-c.style.top="-10px";
-c.style.fontSize="22px";
-document.body.appendChild(c);
 
-let fall=setInterval(()=>{
-c.style.top=parseInt(c.style.top)+6+"px";
-if(parseInt(c.style.top)>window.innerHeight){
-clearInterval(fall);
-c.remove();
+for(let i=0;i<220;i++){
+
+let heart=document.createElement("div");
+heart.innerHTML="❤️";
+heart.style.position="fixed";
+heart.style.fontSize=(20 + Math.random()*30)+"px";
+heart.style.zIndex="999";
+
+/* Random side spawn */
+let side=Math.floor(Math.random()*4);
+
+if(side===0){ // Top
+heart.style.top="-50px";
+heart.style.left=Math.random()*100+"%";
 }
-},25);
+if(side===1){ // Bottom
+heart.style.top="110vh";
+heart.style.left=Math.random()*100+"%";
 }
+if(side===2){ // Left
+heart.style.left="-50px";
+heart.style.top=Math.random()*100+"%";
+}
+if(side===3){ // Right
+heart.style.left="110vw";
+heart.style.top=Math.random()*100+"%";
+}
+
+document.body.appendChild(heart);
+
+/* Move toward center */
+let xSpeed=(Math.random()-0.5)*6;
+let ySpeed=(Math.random()-0.5)*6;
+
+let move=setInterval(()=>{
+heart.style.left=(heart.offsetLeft + xSpeed)+"px";
+heart.style.top=(heart.offsetTop + ySpeed)+"px";
+
+},30);
+
+/* Remove after few seconds */
+setTimeout(()=>{
+clearInterval(move);
+heart.remove();
+},6000);
+
+}
+
 }
 
 </script>
 
 </body>
 </html>
+
