@@ -55,21 +55,26 @@ box-shadow:0 0 20px rgba(255,179,198,0.6);
 
 /* Slideshow */
 .slideshow{
-position:relative;
-width:85%;
-max-width:320px;
-height:350px;
-margin:auto;
-overflow:hidden;
+  position: relative;
+  width: 85%;
+  max-width: 320px;
+  aspect-ratio: 16/9;   /* or 3/4 if your images are portrait */
+  margin: auto;
+  overflow: hidden;
 }
+
 .slide{
-position:absolute;
-width:100%;
-height:100%;
-object-fit:cover;
-border-radius:20px;
-opacity:0;
-transition:opacity 1s ease;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;   /* keeps full image visible */
+  border-radius: 20px;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.slide.active{
+  opacity: 1;
 }
 
 .photo-grid{
@@ -162,47 +167,27 @@ function start(){
 document.getElementById("intro").style.display="none";
 showSection("memories");
 
-let music=document.getElementById("music");
-music.volume=0;
-music.play();
-
-let fade=setInterval(()=>{
-if(music.volume<1){
-music.volume+=0.05;
-}else clearInterval(fade);
-},200);
-}
- let slideIndex = 0;
-let slides = document.getElementsByClassName("slide");
-
-// Show first slide immediately
-if(slides.length > 0){
-    slides[0].style.opacity = "1";
-}
-
-let slides = document.getElementsByClassName("slide");
-let slideIndex = 0;
-
-// Show first slide immediately
-if(slides.length > 0){
-    slides[0].style.opacity = "1";
-}
+let music=document.ge) slides[0].classList.add("active");
 
 function showSlides(){
-    // hide all slides
-    for(let i = 0; i < slides.length; i++){
-        slides[i].style.opacity = "0";
-    }
+  
+ let slides = document.getElementsByClassName("slide");
+let slideIndex = 0;
 
-    // move to next slide
-    slideIndex++;
-    if(slideIndex >= slides.length){
-        slideIndex = 0;
-    }
+// show first slide
+if(slides.length > 0) slides[0].classList.add("active");
 
-    slides[slideIndex].style.opacity = "1";
+function showSlides(){
+  for(let i=0;i<slides.length;i++){
+    slides[i].classList.remove("active");
+  }
 
-    setTimeout(showSlides, 6000); // 6 seconds per slide
+  slideIndex++;
+  if(slideIndex >= slides.length) slideIndex = 0;
+
+  slides[slideIndex].classList.add("active");
+
+  setTimeout(showSlides, 4000); // 4s per slide
 }
 
 showSlides();
@@ -298,6 +283,7 @@ music.paused?music.play():music.pause();
 
 </body>
 </html>
+
 
 
 
