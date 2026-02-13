@@ -32,18 +32,25 @@ min-height:100vh;
 padding:40px 20px;
 }
 
+#intro{
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+height:100vh;
+}
+
 /* Buttons */
 button{
-padding:14px 30px;
+padding:15px 30px;
 border:none;
 border-radius:30px;
 font-size:18px;
 margin:10px;
-background:#ffb3c1;
+background:#ffb3c6;
 color:#3b0a1a;
-font-weight:bold;
 cursor:pointer;
-box-shadow:0 0 15px rgba(255,179,193,0.6);
+box-shadow:0 0 20px rgba(255,179,198,0.6);
 }
 
 /* Slideshow */
@@ -54,41 +61,13 @@ border-radius:20px;
 transition:opacity 1s;
 }
 
-/* Floating hearts */
-.heart{
-position:fixed;
-font-size:20px;
-animation:float 8s linear infinite;
-opacity:0.5;
-}
-
-@keyframes float{
-from{transform:translateY(100vh);}
-to{transform:translateY(-10vh);}
-}
-
-#intro{
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-height:100vh;
-}
-
-#letterBox{
-min-height:180px;
-font-size:18px;
-line-height:1.6;
-color:#ffd6dc;
-}
-
 </style>
 </head>
 
 <body>
 
-<audio id="song" controls>
-  <source src="I_Wanna_Be_Yours.mp3" type="audio/mpeg">
+<audio id="music" loop>
+<source src="I_Wanna_Be_Your.mp3" type="audio/mpeg">
 </audio>
 
 <!-- INTRO -->
@@ -100,11 +79,9 @@ color:#ffd6dc;
 <!-- MEMORIES -->
 <div id="memories" class="section">
 <h2>Our Memories 📸</h2>
-
 <div class="glass">
 <img id="slide" class="slide" src="photo1.jpg">
 </div>
-
 <br>
 <button onclick="nextScene('proposalFake')">Continue ❤️</button>
 </div>
@@ -112,33 +89,28 @@ color:#ffd6dc;
 <!-- FAKE PROPOSAL -->
 <div id="proposalFake" class="section">
 <h2>Will You Be My Valentine? ❤️</h2>
-
 <button onclick="fakeReject()">NO 😈</button>
 <button onclick="fakeReject()">NO 😈</button>
 </div>
 
-<!-- JOKE SCENE -->
+<!-- JOKE -->
 <div id="jokeScene" class="section">
 <h2>I knew you hated me all the way 🥀</h2>
-
-<img src="joke.jpg" style="width:260px;border-radius:20px;margin-top:20px;">
+<img src="joke.jpg" style="width:250px;border-radius:20px;margin-top:20px;">
 </div>
 
 <!-- REAL PROPOSAL -->
 <div id="proposalReal" class="section">
 <h2>Okay I was kidding 😏</h2>
 <h2>Will You Be My Valentine? ❤️</h2>
-
 <button onclick="yes()">YES ❤️</button>
 <button onclick="escapeNo(this)">NO 😜</button>
-
 <h2 id="result"></h2>
 </div>
 
-<!-- LOVE LETTER -->
+<!-- LETTER -->
 <div id="letter" class="section">
 <h2>A Letter For You 💌</h2>
-
 <div class="glass" id="letterBox"></div>
 </div>
 
@@ -146,18 +118,7 @@ color:#ffd6dc;
 
 <script>
 
-/* Floating Hearts */
-setInterval(()=>{
-let heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML="❤️";
-heart.style.left=Math.random()*100+"%";
-document.body.appendChild(heart);
-
-setTimeout(()=>heart.remove(),8000);
-},900);
-
-/* Start Story */
+/* START */
 function start(){
 document.getElementById("intro").style.display="none";
 showSection("memories");
@@ -173,12 +134,7 @@ music.volume+=0.05;
 },200);
 }
 
-function toggleMusic(){
-let music=document.getElementById("music");
-music.paused?music.play():music.pause();
-}
-
-/* Scene Switching */
+/* SECTION SWITCH */
 function showSection(id){
 document.querySelectorAll(".section").forEach(s=>s.style.display="none");
 document.getElementById(id).style.display="block";
@@ -188,97 +144,44 @@ function nextScene(id){
 showSection(id);
 }
 
-/* Fake Reject */
+/* FAKE REJECT */
 function fakeReject(){
-
 showSection("jokeScene");
-
 setTimeout(()=>{
 showSection("proposalReal");
 },10000);
-
 }
 
-/* Slideshow */
-let photos=[
-"https://i.postimg.cc/mkyHKPTG/IMG-20260207-162506-001.jpg",
-"https://i.postimg.cc/qqx3WNpC/IMG-20260207-162457-990.jpg",
-"https://i.postimg.cc/vTtVC4Gn/IMG-20260207-162502-599.jpg",
-"photo4.jpg",
-"photo5.jpg"
-];
-
-let slideIndex=0;
-
-setInterval(()=>{
-slideIndex=(slideIndex+1)%photos.length;
-let img=document.getElementById("slide");
-
-if(img){
-img.style.opacity=0;
-setTimeout(()=>{
-img.src=photos[slideIndex];
-img.style.opacity=1;
-},500);
-}
-},3000);
-
-/* YES BUTTON */
+/* YES */
 function yes(){
-
-document.getElementById("result").innerHTML="You just made me the happiest person alive ❤️";
-
-heartExplosion();
-
+document.getElementById("result").innerHTML="You just made me the happiest person alive ❤️🎉";
+confetti();
 setTimeout(()=>{
 showSection("letter");
 typeLetter();
-},4500);
-
+},4000);
 }
 
-/* Escaping NO */
+/* NO ESCAPE */
 function escapeNo(btn){
 btn.style.position="absolute";
 btn.style.left=Math.random()*80+"%";
 btn.style.top=Math.random()*80+"%";
 }
 
-/* Heart Explosion */
-function heartExplosion(){
-
-for(let i=0;i<260;i++){
-
+/* CONFETTI */
+function confetti(){
+for(let i=0;i<220;i++){
 let heart=document.createElement("div");
 heart.innerHTML="❤️";
 heart.style.position="fixed";
-heart.style.fontSize=(20+Math.random()*30)+"px";
+heart.style.fontSize=(20 + Math.random()*30)+"px";
+heart.style.left=Math.random()*100+"%";
+heart.style.top=Math.random()*100+"%";
 heart.style.zIndex="999";
-
-let side=Math.floor(Math.random()*4);
-
-if(side===0){heart.style.top="-50px";heart.style.left=Math.random()*100+"%";}
-if(side===1){heart.style.top="110vh";heart.style.left=Math.random()*100+"%";}
-if(side===2){heart.style.left="-50px";heart.style.top=Math.random()*100+"%";}
-if(side===3){heart.style.left="110vw";heart.style.top=Math.random()*100+"%;}
-
 document.body.appendChild(heart);
-
-let xSpeed=(Math.random()-0.5)*6;
-let ySpeed=(Math.random()-0.5)*6;
-
-let move=setInterval(()=>{
-heart.style.left=(heart.offsetLeft+xSpeed)+"px";
-heart.style.top=(heart.offsetTop+ySpeed)+"px";
-},30);
-
-setTimeout(()=>{
-clearInterval(move);
-heart.remove();
-},6000);
-
+setTimeout(()=>heart.remove(),4000);
 }
-
 }
 
 /* TYPEWRITER LETTER */
@@ -297,7 +200,6 @@ I love you ❤️`;
 let i=0;
 
 function typeLetter(){
-
 let box=document.getElementById("letterBox");
 box.innerHTML="";
 i=0;
@@ -306,7 +208,6 @@ function typing(){
 if(i<letter.length){
 box.innerHTML+=letter.charAt(i);
 i++;
-
 let speed=70+Math.random()*70;
 setTimeout(typing,speed);
 }
@@ -315,8 +216,12 @@ setTimeout(typing,speed);
 typing();
 }
 
+function toggleMusic(){
+let music=document.getElementById("music");
+music.paused?music.play():music.pause();
+}
+
 </script>
 
 </body>
 </html>
-
