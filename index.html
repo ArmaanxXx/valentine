@@ -173,23 +173,36 @@ music.volume+=0.05;
 },200);
 }
  let slideIndex = 0;
-
-function showSlides(){
 let slides = document.getElementsByClassName("slide");
 
-for(let i=0;i<slides.length;i++){
-slides[i].style.opacity="0";
+// Show first slide immediately
+if(slides.length > 0){
+    slides[0].style.opacity = "1";
 }
 
-slideIndex++;
+let slides = document.getElementsByClassName("slide");
+let slideIndex = 0;
 
-if(slideIndex > slides.length){
-slideIndex = 1;
+// Show first slide immediately
+if(slides.length > 0){
+    slides[0].style.opacity = "1";
 }
 
-slides[slideIndex-1].style.opacity="1";
+function showSlides(){
+    // hide all slides
+    for(let i = 0; i < slides.length; i++){
+        slides[i].style.opacity = "0";
+    }
 
-setTimeout(showSlides,6000);
+    // move to next slide
+    slideIndex++;
+    if(slideIndex >= slides.length){
+        slideIndex = 0;
+    }
+
+    slides[slideIndex].style.opacity = "1";
+
+    setTimeout(showSlides, 6000); // 6 seconds per slide
 }
 
 showSlides();
@@ -285,6 +298,7 @@ music.paused?music.play():music.pause();
 
 </body>
 </html>
+
 
 
 
