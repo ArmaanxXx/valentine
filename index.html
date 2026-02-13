@@ -58,7 +58,7 @@ box-shadow:0 0 20px rgba(255,179,198,0.6);
   position: relative;
   width: 85%;
   max-width: 320px;
-  aspect-ratio: 16/9;   /* or 3/4 if your images are portrait */
+  aspect-ratio: 16/9;  /* adjusts height automatically */
   margin: auto;
   overflow: hidden;
 }
@@ -67,7 +67,7 @@ box-shadow:0 0 20px rgba(255,179,198,0.6);
   position: absolute;
   width: 100%;
   height: 100%;
-  object-fit: contain;   /* keeps full image visible */
+  object-fit: contain;  /* shows entire image */
   border-radius: 20px;
   opacity: 0;
   transition: opacity 1s ease;
@@ -295,6 +295,7 @@ music.paused?music.play():music.pause();
 
 </body>
 </html>
+
 
 
 
