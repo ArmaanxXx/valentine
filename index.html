@@ -58,7 +58,12 @@ box-shadow:0 0 20px rgba(255,179,198,0.6);
 width:85%;
 max-width:320px;
 border-radius:20px;
-transition:opacity 1s;
+margin:auto;
+position:absolute;
+left:0;
+right:0;
+opacity:0;
+transition:opacity 1s ease;
 }
 .photo-grid{
 display:grid;
@@ -103,6 +108,8 @@ margin:auto;
 <!-- MEMORIES -->
 <div class="glass">
 
+<div style="position:relative; height:350px;">
+
 <img src="https://i.postimg.cc/mkyHKPTG/IMG-20260207-162506-001.jpg" class="slide">
 <img src="https://i.postimg.cc/qqx3WNpC/IMG-20260207-162457-990.jpg" class="slide">
 <img src="https://i.postimg.cc/vTtVC4Gn/IMG-20260207-162502-599.jpg" class="slide">
@@ -110,6 +117,7 @@ margin:auto;
 <img src="photo5.jpg" class="slide">
 
 </div>
+
 </div>
 
 <br>
@@ -169,7 +177,7 @@ function showSlides(){
 let slides = document.getElementsByClassName("slide");
 
 for(let i=0;i<slides.length;i++){
-slides[i].style.display="none";
+slides[i].style.opacity="0";
 }
 
 slideIndex++;
@@ -178,9 +186,9 @@ if(slideIndex > slides.length){
 slideIndex = 1;
 }
 
-slides[slideIndex-1].style.display="block";
+slides[slideIndex-1].style.opacity="1";
 
-setTimeout(showSlides,4000);
+setTimeout(showSlides,6000);
 }
 
 showSlides();
@@ -276,6 +284,7 @@ music.paused?music.play():music.pause();
 
 </body>
 </html>
+
 
 
 
