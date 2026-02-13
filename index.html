@@ -163,33 +163,45 @@ transform:scale(1.08);
 <script>
 
 /* START */
-function start(){
-document.getElementById("intro").style.display="none";
-showSection("memories");
-
-let music=document.ge) slides[0].classList.add("active");
-
-function showSlides(){
-  
- let slides = document.getElementsByClassName("slide");
+let slides = document.getElementsByClassName("slide");
 let slideIndex = 0;
 
-// show first slide
+// Show first slide immediately
 if(slides.length > 0) slides[0].classList.add("active");
 
-function showSlides(){
-  for(let i=0;i<slides.length;i++){
-    slides[i].classList.remove("active");
-  }
+// Start button
+function start(){
+    document.getElementById("intro").style.display = "none";
+    showSection("memories");
 
-  slideIndex++;
-  if(slideIndex >= slides.length) slideIndex = 0;
+    // start music
+    let music = document.getElementById("music");
+    music.volume = 0;
+    music.play();
 
-  slides[slideIndex].classList.add("active");
+    let fade = setInterval(()=>{
+        if(music.volume < 1){
+            music.volume += 0.05;
+        } else clearInterval(fade);
+    }, 200);
 
-  setTimeout(showSlides, 4000); // 4s per slide
+    // start slideshow
+    showSlides();
 }
 
+// Slideshow function (global)
+function showSlides(){
+    for(let i=0; i<slides.length; i++){
+        slides[i].classList.remove("active");
+    }
+
+    slideIndex++;
+    if(slideIndex >= slides.length) slideIndex = 0;
+
+    slides[slideIndex].classList.add("active");
+
+    setTimeout(showSlides, 4000); // 4s per slide
+}
 showSlides();
 
 /* SECTION SWITCH */
@@ -283,6 +295,7 @@ music.paused?music.play():music.pause();
 
 </body>
 </html>
+
 
 
 
